@@ -6,8 +6,6 @@ angular.module('locatorDemo', [
   .controller('MainCtrl', ['$scope', function ($scope) {
 
       mainCtrl = $scope;
-        mainCtrl.locRes = 1;
-     console.log(mainCtrl.locRes);
       // for the map
       $scope.map = {
         center: {
@@ -39,4 +37,35 @@ angular.module('locatorDemo', [
           animation: 1 // 1: BOUNCE, 2: DROP
         }
       };
+
+      $scope.alertVal = function() {
+        if($scope.lookedUpLocation){
+          console.log('aa1111'+ $scope.lookedUpLocation.description);
+          $scope.marker = {
+              id: 0,
+              coords: {
+                latitude:  $scope.lookedUpLocation.latitude,
+                longitude: $scope.lookedUpLocation.longitude
+              },
+              options: {
+                draggable:true,
+                title: 'The KVK Blog',
+                animation: 1 // 1: BOUNCE, 2: DROP
+              }
+            };
+
+             $scope.map = {
+                center: {
+                  latitude:  $scope.lookedUpLocation.latitude,
+                  longitude: $scope.lookedUpLocation.longitude
+                },
+                draggable: true,
+                zoom: 15
+              };
+        }
+          
+
+      };
+
+    $scope.$watch('lookedUpLocation', $scope.alertVal, $scope.map);
   }]);
